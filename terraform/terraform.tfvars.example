@@ -1,0 +1,9 @@
+# Sample Terraform variables for AWS Multi-Account Security Guardrails Engine
+aws_region                     = "us-east-1"
+environment                    = "production"
+project_name                   = "aws-guardrails-engine"
+org_feature_set                = "ALL"
+allowed_regions                = ["us-east-1", "us-east-2", "us-west-2"]
+quarantine_ou_name             = "Quarantine"
+enable_eventbridge_remediation = true
+ir_emergency_role_arn          = "arn:aws:iam::*:role/EmergencyIncidentResponseRole"

@@ -1,0 +1,90 @@
+{
+  "platform": "AWS Multi-Account Security Governance & SCP Guardrails Engine",
+  "author": "Kosha Gohil",
+  "timestamp": "2026-10-28T01:51:08.803027+00:00",
+  "overall_compliance_percentage": 88.0,
+  "summary": {
+    "total_accounts": 5,
+    "compliant_accounts": 1,
+    "drifted_accounts": 3,
+    "quarantined_accounts": 1,
+    "overall_percentage": 88.0,
+    "violations_count": 4
+  },
+  "accounts": [
+    {
+      "account_id": "111100001111",
+      "account_name": "Org-Management-Root",
+      "ou_name": "Root",
+      "status": "COMPLIANT",
+      "compliance_score": 100.0
+    },
+    {
+      "account_id": "222200002222",
+      "account_name": "Security-Tooling-Core",
+      "ou_name": "Core_Security",
+      "status": "COMPLIANT",
+      "compliance_score": 100.0
+    },
+    {
+      "account_id": "333300003333",
+      "account_name": "Workloads-Production",
+      "ou_name": "Workloads_Prod",
+      "status": "DRIFT_DETECTED",
+      "compliance_score": 100.0
+    },
+    {
+      "account_id": "444400004444",
+      "account_name": "Workloads-Staging",
+      "ou_name": "Workloads_NonProd",
+      "status": "DRIFT_DETECTED",
+      "compliance_score": 100.0
+    },
+    {
+      "account_id": "555500005555",
+      "account_name": "Developer-Sandbox-Lab",
+      "ou_name": "Sandbox_Lab",
+      "status": "QUARANTINED",
+      "compliance_score": 100.0
+    }
+  ],
+  "violations": [
+    {
+      "violation_id": "VIO-333300003333-04",
+      "account_id": "333300003333",
+      "rule_name": "NETWORK_UNAUTHORIZED_IGW_ATTACHMENT",
+      "severity": "HIGH",
+      "description": "Unauthorized Internet Gateway igw-0812ab34cd56 attached to VPC",
+      "remediation_action": "Detach unauthorized Internet Gateway to eliminate public egress",
+      "remediated": true
+    },
+    {
+      "violation_id": "VIO-444400004444-01",
+      "account_id": "444400004444",
+      "rule_name": "CIS_DISALLOWED_REGION_USAGE",
+      "severity": "HIGH",
+      "description": "EC2 compute resource spawned in unapproved region (eu-west-1)",
+      "remediation_action": "Terminate rogue region resources and enforce Region SCP",
+      "remediated": true
+    },
+    {
+      "violation_id": "VIO-444400004444-03",
+      "account_id": "444400004444",
+      "rule_name": "S3_BLOCK_PUBLIC_ACCESS_DRIFT",
+      "severity": "CRITICAL",
+      "description": "Account-level S3 Block Public Access setting was disabled",
+      "remediation_action": "Re-enable S3 Account-Level Public Access Block",
+      "remediated": false
+    },
+    {
+      "violation_id": "VIO-555500005555-02",
+      "account_id": "555500005555",
+      "rule_name": "CIS_ROOT_USER_ACTIVITY",
+      "severity": "CRITICAL",
+      "description": "Root account console login or access key generation detected",
+      "remediation_action": "Revoke root access keys and lock down root credentials",
+      "remediated": true
+    }
+  ],
+  "sha256_checksum": "4616c04143db87fca5d9c6f4adcb6e58809554a84b08f38aaa5a93e1d7c8f1a5"
+}

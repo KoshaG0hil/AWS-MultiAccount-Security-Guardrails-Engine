@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyS3BucketPublicAccessModificationsAndVersionPurging",
+      "Effect": "Deny",
+      "Action": [
+        "s3:PutAccountPublicAccessBlock",
+        "s3:DeleteAccountPublicAccessBlock",
+        "s3:DeleteBucketPublicAccessBlock",
+        "s3:DeleteObjectVersion",
+        "s3:PutBucketVersioning"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ArnNotLike": {
+          "aws:PrincipalARN": [
+            "arn:aws:iam::*:role/AWSControlTowerExecution",
+            "arn:aws:iam::*:role/SecurityLeadAdminRole"
+          ]
+        }
+      }
+    }
+  ]
+}
