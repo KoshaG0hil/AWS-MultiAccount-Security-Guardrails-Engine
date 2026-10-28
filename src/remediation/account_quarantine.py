@@ -2,7 +2,7 @@
 
 from typing import Optional
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError
 
 from ..core.config import AccountContext, AccountStatus
 
@@ -37,7 +37,7 @@ class AccountQuarantineController:
             account.ou_id = self.QUARANTINE_OU_ID
             account.ou_name = "Quarantine_Lockdown"
             return True
-        except ClientError:
+        except (ClientError, BotoCoreError):
             # Fallback for dry-run/mock
             account.status = AccountStatus.QUARANTINED
             return False
@@ -61,6 +61,6 @@ class AccountQuarantineController:
             account.ou_id = target_ou_id
             account.ou_name = target_ou_name
             return True
-        except ClientError:
+        except (ClientError, BotoCoreError):
             account.status = AccountStatus.COMPLIANT
             return False

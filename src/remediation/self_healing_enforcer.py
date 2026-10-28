@@ -2,7 +2,7 @@
 
 from typing import List, Optional
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError
 
 from ..core.config import DriftViolation
 
@@ -50,7 +50,7 @@ class SelfHealingEnforcer:
                 },
             )
             return True
-        except ClientError:
+        except (ClientError, BotoCoreError):
             return False
 
     def detach_unauthorized_igw(self, account_id: str, igw_id: str = "igw-0987654321") -> bool:
@@ -60,7 +60,7 @@ class SelfHealingEnforcer:
             # In live account, locate VPC attachment and detach
             # For unit test/mocking, mock client call
             return True
-        except ClientError:
+        except (ClientError, BotoCoreError):
             return False
 
     def restart_cloudtrail_logging(self, account_id: str, trail_name: str = "org-security-trail") -> bool:
@@ -69,7 +69,7 @@ class SelfHealingEnforcer:
             cloudtrail = self.session.client("cloudtrail", region_name="us-east-1")
             cloudtrail.start_logging(Name=trail_name)
             return True
-        except ClientError:
+        except (ClientError, BotoCoreError):
             return False
 
     def remediate_all(self, violations: List[DriftViolation]) -> int:

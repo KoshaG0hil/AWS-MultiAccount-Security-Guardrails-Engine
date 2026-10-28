@@ -101,8 +101,8 @@ def cmd_simulate(args):
     """Runs end-to-end multi-account landing zone drift simulation and self-healing."""
     accounts = get_demo_accounts()
     scanner = MultiAccountDriftScanner()
-    enforcer = SelfHealingEnforcer(dry_run=args.dry_run)
-    quarantine = AccountQuarantineController(dry_run=args.dry_run)
+    enforcer = SelfHealingEnforcer(dry_run=True)
+    quarantine = AccountQuarantineController(dry_run=True)
     reporter = ComplianceManifestGenerator()
 
     console.print(
